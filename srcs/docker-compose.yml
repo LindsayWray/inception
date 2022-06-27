@@ -2,7 +2,7 @@ version: "3"
 
 services:
   mariadb:
-    container_name: "mariadb"
+    container_name: mariadb
     build: ./requirements/mariadb/
     restart: unless-stopped
     env_file: .env
@@ -12,7 +12,7 @@ services:
       - inception
 
   wordpress:
-    container_name: "wordpress"
+    container_name: wordpress
     build: ./requirements/wordpress/
     restart: unless-stopped
     env_file: .env
@@ -21,13 +21,13 @@ services:
     networks:
       - inception
     depends_on:
-      - "mariadb"
+      - mariadb
 
   nginx:
-    container_name: "nginx"
+    container_name: nginx
     build: ./requirements/nginx/
     ports:
-      - "443:443"
+      - 443:443
     restart: unless-stopped
     env_file: .env
     volumes:
@@ -39,4 +39,6 @@ services:
 
 networks:
   inception:
-    driver: bridge
+    driver: bridge 
+    #Bridge networks are usually used when your applications run 
+    # in standalone containers that need to communicate

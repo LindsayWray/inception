@@ -12,13 +12,12 @@ if [ ! -d /var/lib/mysql/mysql ]
 then
     echo "Setting up db the first time" 
 
-    # mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql
     mysql_install_db --basedir=/usr --datadir=/var/lib/mysql --user=mysql
-
 
     # service mysql start && mysql -u root < cat setup.sql
 
-    service mysql start && mysql -u root << END
+    #send query with heredoc
+    service mysql start && mysql -u root << EOF  
     CREATE DATABASE IF NOT EXISTS wordpress;
 
     CREATE USER IF NOT EXISTS '$WP_ADMIN_USER'@'localhost' IDENTIFIED BY '$WP_ADMIN_PW';
@@ -30,16 +29,11 @@ then
     ALTER USER 'root'@'localhost' IDENTIFIED BY '$WP_ROOT_PW';
 
     FLUSH PRIVILEGES;
-END
+EOF
 
     echo "Users created"
 else
     echo "Already set up"
 fi
-
-# service mysql start
-# mysqld --user=mysql                                  ### mysql server
-
-# /usr/bin/mysqld_safe --datadir='/var/lib/mysql'
 
 mysqld

@@ -3,7 +3,6 @@ FROM debian:buster
 RUN apt-get update && apt-get -y upgrade
 RUN apt-get -y install mariadb-server
 
-COPY conf/setup.sql .
 COPY tools/startup.sh .
 RUN chmod +x startup.sh
 
