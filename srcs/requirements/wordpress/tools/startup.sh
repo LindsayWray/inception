@@ -16,8 +16,8 @@ then
     echo Created config
 
     # env | grep WP
-    # wp core install --allow-root --url=https://lwray.42.fr --path= --title="Inception" --admin_user=superuser --admin_email="lwray@student.codam.nl" --admin_password=secret
-    wp core install --allow-root --url=$WP_URL --path= --title="Inception" --admin_user=$WP_ADMIN_USER  --admin_password=$WP_ADMIN_PW --admin_email="lwray@student.codam.nl"
+    # wp core install --allow-root --url=https://lwray.42.fr
+    wp core install --allow-root --url=$WP_URL --path= --title="Inception" --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PW --admin_email="lwray@student.codam.nl"
 
     chown -R www-data:www-data /var/www/wordpress
 fi
