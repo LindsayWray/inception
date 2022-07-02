@@ -7,8 +7,9 @@ services:
     restart: unless-stopped
     env_file: .env
     volumes:
+      - /home/osboxes/data/db/:/var/lib/mysql
   #    - /home/lwray/data/db/:/var/lib/mysql
-      - $HOST_PATH_DB:/var/lib/mysql
+  #    - $HOST_PATH_DB:/var/lib/mysql
     networks:
       - inception
 
@@ -18,8 +19,9 @@ services:
     restart: unless-stopped
     env_file: .env
     volumes:
+      - /home/osboxes/data/wordpress/:/var/www/wordpress
     #  - /home/lwray/data/wordpress/:/var/www/wordpress
-      - $HOST_PATH_WORDPRESS:/var/www/wordpress
+    #  - $HOST_PATH_WORDPRESS:/var/www/wordpress
     networks:
       - inception
     depends_on:
@@ -33,8 +35,9 @@ services:
     restart: unless-stopped
     env_file: .env
     volumes:
+      - /home/osboxes/data/wordpress/:/var/www/wordpress
     #  - /home/lwray/data/wordpress/:/var/www/wordpress
-      - $HOST_PATH_WORDPRESS:/var/www/wordpress
+    #  - $HOST_PATH_WORDPRESS:/var/www/wordpress
     networks:
       - inception
     depends_on:
