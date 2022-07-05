@@ -2,42 +2,42 @@ version: "3"
 
 services:
   mariadb:
-    container_name: mariadb
     build: ./requirements/mariadb/
+    image: mariadb
+    container_name: mariadb
     restart: unless-stopped
     env_file: .env
     volumes:
-      - /home/osboxes/data/db/:/var/lib/mysql
-  #    - /home/lwray/data/db/:/var/lib/mysql
+      - /home/lwray/data/db/:/var/lib/mysql
   #    - $HOST_PATH_DB:/var/lib/mysql
     networks:
       - inception
 
   wordpress:
-    container_name: wordpress
     build: ./requirements/wordpress/
+    image: wordpress
+    container_name: wordpress
     restart: unless-stopped
     env_file: .env
     volumes:
-      - /home/osboxes/data/wordpress/:/var/www/wordpress
-    #  - /home/lwray/data/wordpress/:/var/www/wordpress
-    #  - $HOST_PATH_WORDPRESS:/var/www/wordpress
+      - /home/lwray/data/wordpress/:/var/www/wordpress
+  #    - $HOST_PATH_WORDPRESS:/var/www/wordpress
     networks:
       - inception
     depends_on:
       - mariadb
 
   nginx:
-    container_name: nginx
     build: ./requirements/nginx/
+    image: nginx
+    container_name: nginx
     ports:
       - 443:443
     restart: unless-stopped
     env_file: .env
     volumes:
-      - /home/osboxes/data/wordpress/:/var/www/wordpress
     #  - /home/lwray/data/wordpress/:/var/www/wordpress
-    #  - $HOST_PATH_WORDPRESS:/var/www/wordpress
+      - $HOST_PATH_WORDPRESS:/var/www/wordpress
     networks:
       - inception
     depends_on:
