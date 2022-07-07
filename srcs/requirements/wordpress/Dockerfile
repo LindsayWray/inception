@@ -11,8 +11,10 @@ RUN sed 's|listen = /run/php/php7.3-fpm.sock|listen = 0.0.0.0:9000|g' -i /etc/ph
 RUN mkdir -p /run/php
 
 COPY tools/startup.sh .
+COPY tools/wait_for_it.sh .
 RUN chmod +x startup.sh
+RUN chmod +x wait_for_it.sh
 
 EXPOSE 9000
 
-CMD ./startup.sh
+ENTRYPOINT ./wait_for_it.sh && ./startup.sh

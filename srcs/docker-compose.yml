@@ -5,11 +5,10 @@ services:
     build: ./requirements/mariadb/
     image: mariadb
     container_name: mariadb
-    restart: unless-stopped
+    restart: always
     env_file: .env
     volumes:
-      - /home/lwray/data/db/:/var/lib/mysql
-  #    - $HOST_PATH_DB:/var/lib/mysql
+      - db_volume:/var/lib/mysql
     networks:
       - inception
 
@@ -17,11 +16,10 @@ services:
     build: ./requirements/wordpress/
     image: wordpress
     container_name: wordpress
-    restart: unless-stopped
+    restart: always
     env_file: .env
     volumes:
-      - /home/lwray/data/wordpress/:/var/www/wordpress
-  #    - $HOST_PATH_WORDPRESS:/var/www/wordpress
+      - wp_volume:/var/www/wordpress
     networks:
       - inception
     depends_on:
@@ -33,15 +31,28 @@ services:
     container_name: nginx
     ports:
       - 443:443
-    restart: unless-stopped
+    restart: always
     env_file: .env
     volumes:
-    #  - /home/lwray/data/wordpress/:/var/www/wordpress
-      - $HOST_PATH_WORDPRESS:/var/www/wordpress
+      - wp_volume:/var/www/wordpress
     networks:
       - inception
     depends_on:
       - wordpress
+
+volumes:
+  db_volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/lwray/data/db/
+  wp_volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/lwray/data/wordpress/
 
 networks:
   inception:

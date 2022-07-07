@@ -1,13 +1,15 @@
 PROJECT = inception
 
 all:
-	docker-compose -f ./srcs/docker-compose.yml up -d
+	mkdir -p /home/lwray/data/db
+	mkdir -p /home/lwray/data/wordpress
+	docker-compose -f ./srcs/docker-compose.yml -p inception up -d
 clean:
-	docker-compose -f ./srcs/docker-compose.yml down
+	docker-compose -f ./srcs/docker-compose.yml -p inception down
 
 fclean:
-	docker-compose -f ./srcs/docker-compose.yml down --rmi all --volumes
-	rm -rf ./srcs/data
+	docker-compose -f ./srcs/docker-compose.yml -p inception down --rmi all --volumes
+	rm -rf /home/lwray/data
 
 re: clean all
 
